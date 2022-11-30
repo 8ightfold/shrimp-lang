@@ -1,6 +1,3 @@
-use std::fs::File;
-use std::io::{BufReader, Read};
-
 use colored::*;
 use crate::shrimp::utility::print_error;
 
@@ -20,14 +17,16 @@ impl std::fmt::Display for File_handle {
 }
 
 impl File_handle {
-    pub fn new(path: &String, file: File) -> Self {
+    pub fn new(path: &String) -> Self {
         let mut data = String::new();
-        let read_result = BufReader::new(file).read_to_string(&mut data);
+        let read_result = std::fs::read_to_string(path);
         match read_result {
             Err(error) => {
                 print_error!(format!("error reading file {path}"), format!("{error}"));
             },
-            _ => {}
+            Ok(val) => {
+                data.clone_from(&val);
+            }
         }
         return Self { filepath: path.clone(), filedata: data }
     }

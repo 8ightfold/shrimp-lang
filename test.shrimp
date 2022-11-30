@@ -1,0 +1,19 @@
+@import stl::io::static_format;
+
+using literal = [](immut ix8);
+
+struct bind {
+    x: ux8;
+    y: ux8;
+    z: ux8;
+}
+
+fn `return`(perfect b: bind) literal {
+    return stl::static_format("\{ {}, {}, {} \}"f, bind.x, bind.y, bind.z);
+}
+
+fn core() bind {
+    [] var arr: auto [012, 123, 234, 345, 456, 567, 678, 789];
+    var ret: bind { arr[0, 4, 7] };
+    return ret;
+}

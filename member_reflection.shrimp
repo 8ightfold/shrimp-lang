@@ -1,0 +1,17 @@
+ @import stl::io::print;
+
+ using literal = [](immut ix8);
+
+ raw struct S {
+     x: ux4;
+     y: ux4 S::*;
+     z: { fx8 };
+ }
+
+ fn core() void {
+     metavar reflect?: S.members;                 // allowed to not exist
+     for comptime(m??: auto in reflect) {         // skips loop if .members is invalid
+         var type_name: literal { m.type.name };
+         stl::print("{}: {}\n"f, m.name, name);
+     }
+ }
