@@ -4,11 +4,12 @@ use colored::*;
 use std::env::current_dir;
 use shrimp::utility::print_error;
 
+
 fn main() {
     let curr_dir = current_dir();
     match curr_dir {
         Ok(val) => println!("{}: {}", "current directory".blue(), val.display()),
-        Err(error) => { print_error!(format!("{error}")); std::process::exit(-1) },
+        Err(error) => { print_error!({ "{error}" }); std::process::exit(-1) },
     }
 
     let files = shrimp::read_files();
@@ -19,6 +20,6 @@ fn main() {
                 println!("{file}\n")
             }
         },
-        None => { print_error!("failed to read file".to_string()); std::process::exit(-1) },
+        None => { print_error!({"failed to read file"}); std::process::exit(-1) },
     }
 }

@@ -1,5 +1,5 @@
 use colored::*;
-use crate::shrimp::utility::print_error;
+use self::super::print_error;
 
 
 pub struct File_handle {
@@ -22,7 +22,7 @@ impl File_handle {
         let read_result = std::fs::read_to_string(path);
         match read_result {
             Err(error) => {
-                print_error!(format!("error reading file {path}"), format!("{error}"));
+                print_error!({"error reading file {path}"}, {"{error}"});
             },
             Ok(val) => {
                 data.clone_from(&val);

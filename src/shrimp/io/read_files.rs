@@ -1,8 +1,7 @@
-use std::env::{args, current_dir};
+use std::env::args;
 
 use crate::shrimp;
 use shrimp::utility::File_handle;
-use shrimp::utility::print_error;
 
 
 fn get_filenames() -> Vec<String> {
@@ -16,25 +15,12 @@ pub fn read_files() -> Option<Vec<File_handle>> {
     let mut files: Vec<File_handle> = Vec::new();
     files.reserve(args.len());
 
-    let working_directory = match current_dir() {
-        Ok(val) => val,
-        Err(error) => {
-            print_error!(format!("{error}"));
-            std::process::exit(-1)
-        }
-    };
-
     for arg in args {
-        match arg {
+        match arg.as_str() {
+            "-P" | "-p" | "--package" => {},
+            "-B" | "-b" | "--binary" => {},
             _ => {
-                let mut path = working_directory.clone();
-                path.push(arg);
-
-                let path_str = path.to_str().unwrap();
-                let mut cloned_path = String::new();
-                cloned_path.reserve(path_str.len());
-                cloned_path.insert_str(0, path_str);
-                files.push(File_handle::new(&cloned_path))
+                files.push(File_handle::new(&arg.clone()))
             }
         }
     }
